@@ -7,6 +7,8 @@ import os
 import time
 import random
 
+overwrite = False #this flag determines whether the scraper will overwrite files that already have been scraped.
+
 #following br setup code from http://stockrt.github.io/p/emulating-a-browser-in-python-with-mechanize/
 # Browser
 br = mechanize.Browser()
@@ -48,27 +50,35 @@ def traverse_all_players_from_index(index):
 
 if not os.path.exists('scraped-html'):
     os.makedirs('scraped-html')
+if not os.path.exists('scraped-html/players'):
+    os.makedirs('scraped-html/players')
 
-page = br.open('http://www.basketball-reference.com/players/a')
-html = page.read()
+index_page = br.open('http://www.basketball-reference.com/players/a')
+html = index_page.read()
 with open('scraped-html/a.html', 'wb') as outfile:
 	outfile.write(html)
 
-for letter in 'bc':#defghijklmnopqrstuvwxyz':
+for letter in 'bcdefghijklmnopqrstuvwxyz':
 	print('Scraping {}'.format(letter))
 	#pause to make it seem not like a scraper
 	time.sleep(0.3 + random.random()*2)
 	try:
-		page = br.follow_link(text=letter.upper())
-		html = page.read()
+		br.set_response(index_page)
+		index_page = br.follow_link(text=letter.upper())
+		html = index_page.read()
 		with open('scraped-html/{}.html'.format(letter), 'wb') as outfile:
 			outfile.write(html)
 	except mechanize._mechanize.LinkNotFoundError:
 		print('{} not found'.format(letter))
 
-	links_to_player_pages = br._filter_links(br.links(), name_regex = ,url_regex = "/players/./.+")
+	links_to_player_pages = br._filter_links(br.links(),url_regex = "/players/./.+")
 	for link in links_to_player_pages:
-		player_page = br.follow_link(link)
-		html = player_page.read()
-		with open('scraped-html/{}.html'.format(link.text), 'wb') as outfile:
-			outfile.write(html)
+		if overwrite or not os.path.isfile('scraped-html/players/{}.html'.format(link.text)) :
+			print("Scraping {}'s player page.".format(link.text))
+			time.sleep(0.4)
+			player_page = br.follow_link(link)
+			html = player_page.read()
+			with open('scraped-html/players/{}.html'.format(link.text), 'wb') as outfile:
+				outfile.write(html)
+		else:
+			print("skipping {}'s player page".format(link.text))
