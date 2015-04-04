@@ -3,6 +3,9 @@
 import requests
 import mechanize
 import cookielib
+import os
+import time
+import random
 
 #following br setup code from http://stockrt.github.io/p/emulating-a-browser-in-python-with-mechanize/
 # Browser
@@ -34,8 +37,38 @@ br.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:36.0) Ge
                  ('Accept-Encoding', 'gzip, deflate'),
                  ('Connection', 'keep-alive')]
 
-page = br.open('http://www.basketball-reference.com/players/a/')
-html = page.read()
-with open('scraped-html/A.html', 'wb') as outfile:
-    outfile.write(html)
 
+def traverse_all_players_from_index(index):
+	pass#br.
+
+#let's get all of the player pages
+#first, the index of all players
+
+#~7000 player pages... if I want the scraping to take ~1 hr, then I should have 2 requests per second.
+
+if not os.path.exists('scraped-html'):
+    os.makedirs('scraped-html')
+
+page = br.open('http://www.basketball-reference.com/players/a')
+html = page.read()
+with open('scraped-html/a.html', 'wb') as outfile:
+	outfile.write(html)
+
+for letter in 'bc':#defghijklmnopqrstuvwxyz':
+	print('Scraping {}'.format(letter))
+	#pause to make it seem not like a scraper
+	time.sleep(0.3 + random.random()*2)
+	try:
+		page = br.follow_link(text=letter.upper())
+		html = page.read()
+		with open('scraped-html/{}.html'.format(letter), 'wb') as outfile:
+			outfile.write(html)
+	except mechanize._mechanize.LinkNotFoundError:
+		print('{} not found'.format(letter))
+
+	links_to_player_pages = br._filter_links(br.links(), name_regex = ,url_regex = "/players/./.+")
+	for link in links_to_player_pages:
+		player_page = br.follow_link(link)
+		html = player_page.read()
+		with open('scraped-html/{}.html'.format(link.text), 'wb') as outfile:
+			outfile.write(html)
