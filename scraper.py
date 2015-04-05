@@ -40,8 +40,6 @@ br.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:36.0) Ge
                  ('Connection', 'keep-alive')]
 
 
-def traverse_all_players_from_index(index):
-	pass#br.
 
 #let's get all of the player pages
 #first, the index of all players
@@ -58,7 +56,7 @@ html = index_page.read()
 with open('scraped-html/a.html', 'wb') as outfile:
 	outfile.write(html)
 
-for letter in 'bcdefghijklmnopqrstuvwxyz':
+for letter in 'abcdefghijklmnopqrstuvwxyz':
 	print('Scraping {}'.format(letter))
 	#pause to make it seem not like a scraper
 	time.sleep(0.3 + random.random()*2)
