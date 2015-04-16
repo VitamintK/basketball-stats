@@ -7,8 +7,7 @@ import json
 
 overwrite = True
 
-if not os.path.isdir('json'):
-    os.makedirs('json')
+dirr = "scheduleresults"
 
 def clean_text(text):
     p = text.replace("&nbsp;", '')
@@ -22,10 +21,10 @@ def clean_text(text):
     
 
 player_dict = dict()
-for player_file in os.listdir('scraped-html/players/'):
+for player_file in os.listdir(dirr):
     print(player_file)
-    if overwrite or not os.path.isfile("json/{}.json".format(player_file[:-5])):
-        with open("scraped-html/players/{}".format(player_file)) as player_html:
+    if overwrite or not os.path.isfile("{}.json".format(player_file[:-5])):
+        with open("{}/{}".format(dirr,player_file)) as player_html:
             soup = BeautifulSoup(player_html)
             tables = soup.findAll('table')
             for table in tables:
@@ -42,7 +41,7 @@ for player_file in os.listdir('scraped-html/players/'):
                         except:
                             raise
                 player_dict[table_id] = table_matrix
-                with open("json/{}.json".format(player_file[:-5]), 'w') as pjson:
+                with open("{}/{}.json".format(dirr,player_file[:-5]), 'w') as pjson:
                     json.dump(player_dict, pjson)
 
 """
