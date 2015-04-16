@@ -1,4 +1,5 @@
-"""based on http://www.reddit.com/r/nba/comments/23a9x8/i_took_the_playoff_bracket_and_moved_teams_up/"""
+"""idea for this came from
+http://www.reddit.com/r/nba/comments/23a9x8/i_took_the_playoff_bracket_and_moved_teams_up/ from 2014's playoffs"""
 import json
 from collections import defaultdict
 json_file = 'scheduleresults/2014-2015.json'
@@ -46,7 +47,6 @@ for match in jsn['games'][1:]:
     #print('winner is {}.'.format(winner))
     season.add_match(match[2], match[4], match[3], match[5])
 
-#seeds = {east: [lakers, celtics, grizzlies, hawks], west: [cavs, pelicans, clippers, knicks]}
 class Playoffs():
     def __init__(self, seeds):
         self.seeds = seeds

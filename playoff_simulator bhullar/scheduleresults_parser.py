@@ -1,5 +1,4 @@
 """turn scraped html into json"""
-#possible libraries: numpy, pandas, or some database.
 
 import os
 from BeautifulSoup import BeautifulSoup
@@ -43,24 +42,3 @@ for player_file in os.listdir(dirr):
                 player_dict[table_id] = table_matrix
                 with open("{}/{}.json".format(dirr,player_file[:-5]), 'w') as pjson:
                     json.dump(player_dict, pjson)
-
-"""
-{
-    Name: MJ
-    Trivia: {
-        Draft pick: 2
-        Draft year: 1960
-
-    }
-
-    Totals:{
-        1989:
-        {
-            reb: 10
-            fg: 100
-
-        },
-
-    }
-
-}"""
