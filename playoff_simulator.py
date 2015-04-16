@@ -33,19 +33,6 @@ class Season():
             print('    Point tiebreaker.  winner is {} with {} over {} with {}.'.format(
                 winur, max(score.values()), min(score, key=lambda x: score[x]), min(score.values())))
             return winur
-
-            #####
-            #print(self.scores[frozenset((team1, team2))])
-            #scores = zip(self.scores[frozenset((team1, team2))])
-            #print(scores)
-            #score = {scores[0].keys()[0]: sum(scores[0].values()),
-            #         scores[1].keys()[0]: sum(scores[1].values())}
-            #if scores.items()[0][1] > scores.items()[1][1]:
-            #    return scores.items()[0][0]
-            #elif scores.items()[0][1] < scores.items()[1][1]:
-            #    return scores.items()[1][0]
-            #else:
-            #    return None
         print("    {} wins with a records of {}-{} over {}".format(
             (team1, team2)[records[1] > records[0]], max(records[1], records[0]), min(records[1], records[0]), (team2, team1)[records[1] > records[0]]))
         return (team1, team2)[records[1] > records[0]]    
@@ -75,7 +62,7 @@ class Playoffs():
             next_round = {'east': [], 'west': []}
             for division in ('west','east'):
                 s = seeds[division]
-                for i in range(len(s)/2):
+                for i in range(len(s)//2):
                     team1, team2 = s[i], s[-i-1]
                     winner = season.get_winner(team1, team2)
                     next_round[division].append(winner)
@@ -85,7 +72,7 @@ class Playoffs():
                 return winner
             else:
                 seeds = next_round
-            #GROSS GROSS GROSS prof bull would be ashamed of this code :(
+            #GROSS GROSS GROSS prof bull would be ashamed of this code :( do this recursively instead
 
 def run_sim():
     """this method named after bhullar"""
