@@ -77,7 +77,7 @@ class Playoffs():
 def run_sim():
     """this method named after bhullar"""
     seeds = {'east': ['Atlanta Hawks', "Cleveland Cavaliers", "Chicago Bulls", "Toronto Raptors", "Washington Wizards", "Milwaukee Bucks", "Boston Celtics", "Brooklyn Nets"],
-             'west': ['Golden State Warriors', 'Houston Rockets', 'Los Angeles Clippers', "Portland Trail Blazers", "San Antonio Spurs", "Memphis Grizzlies", "Dallas Mavericks", "New Orleans Pelicans"]}
+             'west': ['Golden State Warriors', 'Houston Rockets', 'Los Angeles Clippers', "Portland Trail Blazers", "Memphis Grizzlies", "San Antonio Spurs", "Dallas Mavericks", "New Orleans Pelicans"]}
     playoffs = Playoffs(seeds)
     print(playoffs.run())
 run_sim()
