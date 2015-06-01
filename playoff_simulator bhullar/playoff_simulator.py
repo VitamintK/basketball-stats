@@ -34,7 +34,7 @@ class Season():
             print('    Point tiebreaker.  winner is {} with {} over {} with {}.'.format(
                 winur, max(score.values()), min(score, key=lambda x: score[x]), min(score.values())))
             return winur
-        print("    {} wins with a records of {}-{} over {}".format(
+        print("    {} wins with a record of {}-{} over {}".format(
             (team1, team2)[records[1] > records[0]], max(records[1], records[0]), min(records[1], records[0]), (team2, team1)[records[1] > records[0]]))
         return (team1, team2)[records[1] > records[0]]    
 
